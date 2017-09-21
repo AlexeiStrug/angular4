@@ -1,0 +1,16 @@
+h1, h2, th {
+    color: red;
+}
+
+td {
+    color: pink;
+}
+
+p {
+    font-size: 13px;
+}
+
+:host {
+    font-family: Verdana;
+    color: #555;
+}
