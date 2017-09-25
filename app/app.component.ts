@@ -38,16 +38,25 @@ import {Component} from '@angular/core';
     //         <template [ngSwitchCase]="2">{{count * 100}}</template>
     //         <template ngSwitchDefault>{{count * 1000}}</template>
     //     </div>`
+
+    template:
+            `<p *while="condition">
+        Первый параграф
+    </p>
+    <p *while="!condition">
+        Второй параграф
+    </p>
+    <button (click)="toggle()"> Toggle</button> `
 })
 
 export class AppComponent {
 
-    // operator if else
-    // condition: boolean = true;
-    //
-    // toggle() {
-    //     this.condition = !this.condition;
-    // }
+    // operator if else and structure data
+    condition: boolean = true;
+
+    toggle() {
+        this.condition = !this.condition;
+    }
 
     //operator for
     // items = ["Apple", "Huawei", "Samsung"];
