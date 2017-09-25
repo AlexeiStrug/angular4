@@ -7,38 +7,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var Item = (function () {
-    function Item(purchase, price) {
-        this.purchase = purchase;
-        this.price = price;
-        this.done = false;
-    }
-    return Item;
-}());
-exports.Item = Item;
 var AppComponent = (function () {
     function AppComponent() {
-        this.items = [
-            { purchase: "Хлеб", done: false, price: 15.9 },
-            { purchase: "Масло", done: false, price: 60 },
-            { purchase: "Картофель", done: true, price: 22.6 },
-            { purchase: "Сыр", done: false, price: 310 }
-        ];
     }
-    AppComponent.prototype.addItem = function (text, price) {
-        if (text == null || text == undefined || text.trim() == "")
-            return;
-        if (price == null || price == undefined)
-            return;
-        this.items.push(new Item(text, price));
-    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        templateUrl: './app.component.html',
-        styleUrls: ['./app.component.css']
     })
 ], AppComponent);
 exports.AppComponent = AppComponent;
