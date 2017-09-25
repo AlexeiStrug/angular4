@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from "./data.service";
 import {Phone} from "./phone";
+import {LogService} from "./log.service";
 //
 // export class Item {
 //     purchase: string;
@@ -85,7 +86,7 @@ import {Phone} from "./phone";
                 </tbody>
             </table>
         </div> `,
-    providers: [DataService]
+    providers: [DataService, LogService]
 })
 
 export class AppComponent implements OnInit {

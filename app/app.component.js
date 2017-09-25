@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var data_service_1 = require("./data.service");
+var log_service_1 = require("./log.service");
 var AppComponent = (function () {
     function AppComponent(dataService) {
         this.dataService = dataService;
@@ -28,7 +29,7 @@ AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
         template: "\n        <div class=\"panel\">\n            <div class=\"form-inline\">\n                <div class=\"form-group\">\n                    <div class=\"col-md-8\">\n                        <input class=\"form-control\" [(ngModel)]=\"name\" placeholder=\"Model Phone\"/>\n                    </div>\n                </div>\n                <div class=\"form-group\">\n                    <div class=\"col-md-6\">\n                        <input type=\"number\" class=\"form-control\" [(ngModel)]=\"price\" placeholder=\"Price phone\"/>\n                    </div>\n                </div>\n                <div class=\"form-group\">\n                    <div class=\"col-md-offset 2 col-md-8\">\n                        <button class=\"btn btn-default\" (click)=\"addItem(name,price)\">Add</button>\n                    </div>\n                </div>\n            </div>\n            <table class=\"table tale-striped\">\n                <thead>\n                <tr>\n                    <th>Model</th>\n                    <th>Price</th>\n                </tr>\n                </thead>\n                <tbody>\n                <tr *ngFor=\"let item of items\">\n                    <td>{{item.name}}</td>\n                    <td>{{item.price}}</td>\n                </tr>\n                </tbody>\n            </table>\n        </div> ",
-        providers: [data_service_1.DataService]
+        providers: [data_service_1.DataService, log_service_1.LogService]
     }),
     __metadata("design:paramtypes", [data_service_1.DataService])
 ], AppComponent);
