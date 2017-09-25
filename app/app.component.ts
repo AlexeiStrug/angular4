@@ -52,55 +52,62 @@ import {LogService} from "./log.service";
     // </p>
     // <button (click)="toggle()"> Toggle</button> `
 
+    //DI with logging
+    // template: `
+    //     <div class="panel">
+    //         <div class="form-inline">
+    //             <div class="form-group">
+    //                 <div class="col-md-8">
+    //                     <input class="form-control" [(ngModel)]="name" placeholder="Model Phone"/>
+    //                 </div>
+    //             </div>
+    //             <div class="form-group">
+    //                 <div class="col-md-6">
+    //                     <input type="number" class="form-control" [(ngModel)]="price" placeholder="Price phone"/>
+    //                 </div>
+    //             </div>
+    //             <div class="form-group">
+    //                 <div class="col-md-offset 2 col-md-8">
+    //                     <button class="btn btn-default" (click)="addItem(name,price)">Add</button>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         <table class="table tale-striped">
+    //             <thead>
+    //             <tr>
+    //                 <th>Model</th>
+    //                 <th>Price</th>
+    //             </tr>
+    //             </thead>
+    //             <tbody>
+    //             <tr *ngFor="let item of items">
+    //                 <td>{{item.name}}</td>
+    //                 <td>{{item.price}}</td>
+    //             </tr>
+    //             </tbody>
+    //         </table>
+    //     </div> `,
+    // providers: [DataService, LogService]
+
     template: `
-        <div class="panel">
-            <div class="form-inline">
-                <div class="form-group">
-                    <div class="col-md-8">
-                        <input class="form-control" [(ngModel)]="name" placeholder="Model Phone"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <input type="number" class="form-control" [(ngModel)]="price" placeholder="Price phone"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset 2 col-md-8">
-                        <button class="btn btn-default" (click)="addItem(name,price)">Add</button>
-                    </div>
-                </div>
-            </div>
-            <table class="table tale-striped">
-                <thead>
-                <tr>
-                    <th>Model</th>
-                    <th>Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let item of items">
-                    <td>{{item.name}}</td>
-                    <td>{{item.price}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div> `,
-    providers: [DataService, LogService]
+        <data-comp></data-comp>
+        <data-comp></data-comp>`
 })
 
-export class AppComponent implements OnInit {
-    items: Phone[] = [];
-    constructor(private dataService: DataService) {
-    }
+export class AppComponent {
 
-    addItem(name: string, price: number) {
-        this.dataService.addData(name, price);
-    }
-
-    ngOnInit() {
-        this.items = this.dataService.getData();
-    }
+    // items: Phone[] = [];
+    //
+    // constructor(private dataService: DataService) {
+    // }
+    //
+    // addItem(name: string, price: number) {
+    //     this.dataService.addData(name, price);
+    // }
+    //
+    // ngOnInit() {
+    //     this.items = this.dataService.getData();
+    // }
 
 
     // operator if else and structure data
