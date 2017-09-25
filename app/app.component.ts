@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from "./data.service";
+import {Phone} from "./phone";
 //
 // export class Item {
 //     purchase: string;
@@ -39,24 +41,73 @@ import {Component} from '@angular/core';
     //         <template ngSwitchDefault>{{count * 1000}}</template>
     //     </div>`
 
-    template:
-            `<p *while="condition">
-        Первый параграф
-    </p>
-    <p *while="!condition">
-        Второй параграф
-    </p>
-    <button (click)="toggle()"> Toggle</button> `
+    // uses for while directive
+    // template:
+    //         `<p *while="condition">
+    //     Первый параграф
+    // </p>
+    // <p *while="!condition">
+    //     Второй параграф
+    // </p>
+    // <button (click)="toggle()"> Toggle</button> `
+
+    template: `
+        <div class="panel">
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <input class="form-control" [(ngModel)]="name" placeholder="Model Phone"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <input type="number" class="form-control" [(ngModel)]="price" placeholder="Price phone"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset 2 col-md-8">
+                        <button class="btn btn-default" (click)="addItem(name,price)">Add</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table tale-striped">
+                <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of items">
+                    <td>{{item.name}}</td>
+                    <td>{{item.price}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div> `,
+    providers: [DataService]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
+    items: Phone[] = [];
+    constructor(private dataService: DataService) {
+    }
+
+    addItem(name: string, price: number) {
+        this.dataService.addData(name, price);
+    }
+
+    ngOnInit() {
+        this.items = this.dataService.getData();
+    }
+
 
     // operator if else and structure data
-    condition: boolean = true;
-
-    toggle() {
-        this.condition = !this.condition;
-    }
+    // condition: boolean = true;
+    //
+    // toggle() {
+    //     this.condition = !this.condition;
+    // }
 
     //operator for
     // items = ["Apple", "Huawei", "Samsung"];
