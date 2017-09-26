@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from "./data.service";
 import {LogService} from "./log.service";
-import {NgModel} from "@angular/forms";
+import {NgForm, NgModel} from "@angular/forms";
 //
 // export class Item {
 //     purchase: string;
@@ -147,36 +147,38 @@ export class User {
         }
     `],
     template: `
-        <div>
+        <form #myForm="ngForm" novalidate (ngSubmit)="onSubmit(myForm)">
             <div class="form-group">
                 <label>Имя</label>
-                <input class="form-control" name="name" [(ngModel)]="user.name" #name="ngModel" required/>
+                <input class="form-control" name="name" ngModel required/>
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input class="form-control" type="email" name="email" [(ngModel)]="user.email" #email="ngModel"
-                       required email/>
+                <input class="form-control" type="email" name="email" ngModel required email/>
             </div>
             <div class="form-group">
                 <label>Телефон</label>
-                <input class="form-control" name="phone" [(ngModel)]="user.phone" #phone="ngModel"
-                       required pattern="[0-9]{10}"/>
+                <input class="form-control" name="phone" ngModel required pattern="[0-9]{10}"/>
             </div>
             <div class="form-group">
-                <button [disabled]="name.invalid || email.invalid || phone.invalid"
-                        class="btn btn-default" (click)="addUser()">Добавить
-                </button>
+                <input type="submit" [disabled]="myForm.invalid" class="btn btn-default" value="Send"/>
             </div>
-        </div>`
+        </form>
+        <div> Name: {{myForm.value.name}}</div>
+        <div> Email: {{myForm.value.email}}</div>`
 })
 
 export class AppComponent {
 
-    user: User = new User();
-
-    addUser() {
-        console.log(this.user);
+    onSubmit(form: NgForm) {
+        console.log(form);
     }
+
+    // user: User = new User();
+    //
+    // addUser() {
+    //     console.log(this.user);
+    // }
 
     // phone: Phone = new Phone("", 0, "Samsung")
     // companies: string[] = ["Apple", "Samsung"];
