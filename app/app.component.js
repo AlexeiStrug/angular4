@@ -10,36 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var forms_1 = require("@angular/forms");
-var Phone = (function () {
-    function Phone(title, price, company) {
-        this.title = title;
-        this.price = price;
-        this.company = company;
-    }
-    return Phone;
-}());
-exports.Phone = Phone;
-var User = (function () {
-    function User() {
-    }
-    return User;
-}());
-exports.User = User;
+var http_service_1 = require("./http.service");
 var AppComponent = (function () {
-    function AppComponent() {
-        this.myForm = new forms_1.FormGroup({
-            "userName": new forms_1.FormControl("Tom", forms_1.Validators.required),
-            "userEmail": new forms_1.FormControl("", [forms_1.Validators.required,
-                forms_1.Validators.pattern("[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}")]),
-            "userPhone": new forms_1.FormControl()
-        });
+    function AppComponent(httpService) {
+        this.httpService = httpService;
+        this.users = [];
     }
-    AppComponent.prototype.submit = function () {
-        console.log(this.myForm);
-    };
-    AppComponent.prototype.onSubmit = function (form) {
-        console.log(form);
+    AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.httpService.getData().subscribe(function (resp) {
+            var userList = resp.json().data;
+            for (var index in userList) {
+                console.log(userList[index]);
+                var user = userList[index];
+                _this.users.push({ name: user.userName, age: user.userAge });
+            }
+        });
     };
     return AppComponent;
 }());
@@ -47,9 +33,10 @@ AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
         styles: ["\n        input.ng-touched.ng-invalid {\n            border: solid red 2px;\n        }\n\n        input.ng-touched.ng-valid {\n            border: solid green 2px;\n        }\n    "],
-        template: "\n        <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"submit()\">\n            <div class=\"form-group\">\n                <label>\u0418\u043C\u044F</label>\n                <input class=\"form-control\" name=\"name\" formControlName=\"userName\"/>\n            </div>\n            <div class=\"alert alert-danger\"\n                 *ngIf=\"myForm.controls['userName'].invalid && myForm.controls['userName'].touched\">\n                No name\n            </div>\n            <div class=\"form-group\">\n                <label>Email</label>\n                <input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"userEmail\"/>\n            </div>\n            <div class=\"alert alert-danger\"\n                 *ngIf=\"myForm.controls['userEmail'].invalid && myForm.controls['userEmail'].touched\">\n                Incorrect email\n            </div>\n            <div class=\"form-group\">\n                <label>\u0422\u0435\u043B\u0435\u0444\u043E\u043D</label>\n                <input class=\"form-control\" name=\"phone\" formControlName=\"userPhone\"/>\n            </div>\n            <div class=\"form-group\">\n                <button class=\"btn btn-default\" [disabled]=\"myForm.invalid\">Send</button>\n            </div>\n        </form>"
+        template: "\n        <ul>\n            <li *ngFor=\"let user of users\">\n                <p>Name user: {{user?.name}}</p>\n                <p>Age user: {{user?.age}}</p>\n            </li>\n        </ul>",
+        providers: [http_service_1.HttpService]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [http_service_1.HttpService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

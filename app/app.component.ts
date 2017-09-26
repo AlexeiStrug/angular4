@@ -3,6 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {LogService} from "./log.service";
 import {NgForm, NgModel} from "@angular/forms";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {HttpService} from "./http.service";
+import {User} from "./user";
 //
 // export class Item {
 //     purchase: string;
@@ -16,17 +18,17 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
 //         this.done = false;
 //     }
 // }
-export class Phone {
-    constructor(public title: string, public price: number,
-                public company: string) {
-    }
-}
-
-export class User {
-    name: string;
-    email: string;
-    phone: string;
-}
+// export class Phone {
+//     constructor(public title: string, public price: number,
+//                 public company: string) {
+//     }
+// }
+//
+// export class User {
+//     name: string;
+//     email: string;
+//     phone: string;
+// }
 
 @Component({
     selector: 'my-app',
@@ -171,54 +173,99 @@ export class User {
     //     <div> Email: {{myForm.value.email}}</div>`
 
     //Data-Driven
+    // template: `
+    //     <form [formGroup]="myForm" novalidate (ngSubmit)="submit()">
+    //         <div class="form-group">
+    //             <label>Имя</label>
+    //             <input class="form-control" name="name" formControlName="userName"/>
+    //         </div>
+    //         <div class="alert alert-danger"
+    //              *ngIf="myForm.controls['userName'].invalid && myForm.controls['userName'].touched">
+    //             No name
+    //         </div>
+    //         <div class="form-group">
+    //             <label>Email</label>
+    //             <input class="form-control" type="email" name="email" formControlName="userEmail"/>
+    //         </div>
+    //         <div class="alert alert-danger"
+    //              *ngIf="myForm.controls['userEmail'].invalid && myForm.controls['userEmail'].touched">
+    //             Incorrect email
+    //         </div>
+    //         <div class="form-group">
+    //             <label>Телефон</label>
+    //             <input class="form-control" name="phone" formControlName="userPhone"/>
+    //         </div>
+    //         <div class="form-group">
+    //             <button class="btn btn-default" [disabled]="myForm.invalid">Send</button>
+    //         </div>
+    //     </form>`
+
+    //HTTPS get request sigle user
+    // template: `<div>
+    //     <p>Name user: {{user?.name}}</p>
+    //     <p>Age user: {{user?.age}}</p>
+    // </div>`,
+    // providers: [HttpService]
+
+    //HTTPS get request many users
     template: `
-        <form [formGroup]="myForm" novalidate (ngSubmit)="submit()">
-            <div class="form-group">
-                <label>Имя</label>
-                <input class="form-control" name="name" formControlName="userName"/>
-            </div>
-            <div class="alert alert-danger"
-                 *ngIf="myForm.controls['userName'].invalid && myForm.controls['userName'].touched">
-                No name
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input class="form-control" type="email" name="email" formControlName="userEmail"/>
-            </div>
-            <div class="alert alert-danger"
-                 *ngIf="myForm.controls['userEmail'].invalid && myForm.controls['userEmail'].touched">
-                Incorrect email
-            </div>
-            <div class="form-group">
-                <label>Телефон</label>
-                <input class="form-control" name="phone" formControlName="userPhone"/>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-default" [disabled]="myForm.invalid">Send</button>
-            </div>
-        </form>`
+        <ul>
+            <li *ngFor="let user of users">
+                <p>Name user: {{user?.name}}</p>
+                <p>Age user: {{user?.age}}</p>
+            </li>
+        </ul>`,
+    providers: [HttpService]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-    myForm: FormGroup;
+    //other json with dop field
+    users: User[] = [];
 
-    constructor() {
-        this.myForm = new FormGroup({
-            "userName": new FormControl("Tom", Validators.required),
-            "userEmail": new FormControl("", [Validators.required,
-                Validators.pattern("[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}")]),
-            "userPhone": new FormControl()
-        });
+    constructor(private httpService: HttpService){}
+
+    ngOnInit() {
+        this.httpService.getData().subscribe((resp: Response) => {
+            let userList = resp.json().data;
+            for (let index in userList) {
+                console.log(userList[index];
+                let user = userList[index];
+                this.users.push({name: user.userName, age: user.userAge});
+            }
+        })
     }
 
-    submit() {
-        console.log(this.myForm);
-    }
-
-    onSubmit(form: NgForm) {
-        console.log(form);
-    }
+    //Http many user
+    // users: User[]=[];
+    //
+    // //Http one user
+    // // user: User;
+    // //
+    // constructor(private httpService: HttpService){}
+    //
+    // ngOnInit(){
+    //     this.httpService.getData().subscribe((data: Response) => this.users=data.json());
+    // }
+    // Need for Data-Driven
+    // myForm: FormGroup;
+    //
+    // constructor() {
+    //     this.myForm = new FormGroup({
+    //         "userName": new FormControl("Tom", Validators.required),
+    //         "userEmail": new FormControl("", [Validators.required,
+    //             Validators.pattern("[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}")]),
+    //         "userPhone": new FormControl()
+    //     });
+    // }
+    //
+    // submit() {
+    //     console.log(this.myForm);
+    // }
+    //
+    // onSubmit(form: NgForm) {
+    //     console.log(form);
+    // }
 
     // user: User = new User();
     //

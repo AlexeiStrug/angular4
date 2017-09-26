@@ -6,9 +6,10 @@ import {AppComponent} from './app.component';
 // import {DataComponent} from "./data.component";
 // import {DataService} from "./data.service";
 import {LogService} from "./log.service";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
     declarations: [AppComponent],
     bootstrap: [AppComponent],
     // providers: [DataService, LogService]
