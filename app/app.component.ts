@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService} from "./data.service";
+// import {DataService} from "./data.service";
 import {LogService} from "./log.service";
 import {NgForm, NgModel} from "@angular/forms";
+import {FormGroup, FormControl, Validators} from "@angular/forms";
 //
 // export class Item {
 //     purchase: string;
@@ -146,29 +147,74 @@ export class User {
             border: solid green 2px;
         }
     `],
+
+    //ngForm
+    // template: `
+    //     <form #myForm="ngForm" novalidate (ngSubmit)="onSubmit(myForm)">
+    //         <div class="form-group">
+    //             <label>Имя</label>
+    //             <input class="form-control" name="name" ngModel required/>
+    //         </div>
+    //         <div class="form-group">
+    //             <label>Email</label>
+    //             <input class="form-control" type="email" name="email" ngModel required email/>
+    //         </div>
+    //         <div class="form-group">
+    //             <label>Телефон</label>
+    //             <input class="form-control" name="phone" ngModel required pattern="[0-9]{10}"/>
+    //         </div>
+    //         <div class="form-group">
+    //             <input type="submit" [disabled]="myForm.invalid" class="btn btn-default" value="Send"/>
+    //         </div>
+    //     </form>
+    //     <div> Name: {{myForm.value.name}}</div>
+    //     <div> Email: {{myForm.value.email}}</div>`
+
+    //Data-Driven
     template: `
-        <form #myForm="ngForm" novalidate (ngSubmit)="onSubmit(myForm)">
+        <form [formGroup]="myForm" novalidate (ngSubmit)="submit()">
             <div class="form-group">
                 <label>Имя</label>
-                <input class="form-control" name="name" ngModel required/>
+                <input class="form-control" name="name" formControlName="userName"/>
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf="myForm.controls['userName'].invalid && myForm.controls['userName'].touched">
+                No name
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input class="form-control" type="email" name="email" ngModel required email/>
+                <input class="form-control" type="email" name="email" formControlName="userEmail"/>
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf="myForm.controls['userEmail'].invalid && myForm.controls['userEmail'].touched">
+                Incorrect email
             </div>
             <div class="form-group">
                 <label>Телефон</label>
-                <input class="form-control" name="phone" ngModel required pattern="[0-9]{10}"/>
+                <input class="form-control" name="phone" formControlName="userPhone"/>
             </div>
             <div class="form-group">
-                <input type="submit" [disabled]="myForm.invalid" class="btn btn-default" value="Send"/>
+                <button class="btn btn-default" [disabled]="myForm.invalid">Send</button>
             </div>
-        </form>
-        <div> Name: {{myForm.value.name}}</div>
-        <div> Email: {{myForm.value.email}}</div>`
+        </form>`
 })
 
 export class AppComponent {
+
+    myForm: FormGroup;
+
+    constructor() {
+        this.myForm = new FormGroup({
+            "userName": new FormControl("Tom", Validators.required),
+            "userEmail": new FormControl("", [Validators.required,
+                Validators.pattern("[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}")]),
+            "userPhone": new FormControl()
+        });
+    }
+
+    submit() {
+        console.log(this.myForm);
+    }
 
     onSubmit(form: NgForm) {
         console.log(form);
