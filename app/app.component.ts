@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from "./data.service";
-import {Phone} from "./phone";
 import {LogService} from "./log.service";
+import {NgModel} from "@angular/forms";
 //
 // export class Item {
 //     purchase: string;
@@ -15,6 +15,17 @@ import {LogService} from "./log.service";
 //         this.done = false;
 //     }
 // }
+export class Phone {
+    constructor(public title: string, public price: number,
+                public company: string) {
+    }
+}
+
+export class User {
+    name: string;
+    email: string;
+    phone: string;
+}
 
 @Component({
     selector: 'my-app',
@@ -89,12 +100,98 @@ import {LogService} from "./log.service";
     //     </div> `,
     // providers: [DataService, LogService]
 
+    //operation with one for all
+    // template: `
+    //     <data-comp></data-comp>
+    //     <data-comp></data-comp>`
+
+    // template: `
+    //     <div class="col-xs-8">
+    //         <div class="form-group">
+    //             <label>Название модели</label>
+    //             <input class="form-control" name="title" [(ngModel)]="phone.title" #phoneTitle="ngModel"
+    //                    (ngModelChange)="onTitleChange()"/>
+    //         </div>
+    //         <div class="form-group">
+    //             <label>Цена</label>
+    //             <input type="number" class="form-control" name="price" [(ngModel)]="phone.price" #phonePrice="ngModel"/>
+    //         </div>
+    //         <div class="form-group">
+    //             <label>Производитель</label>
+    //             <select class="form-control" name="company" [(ngModel)]="phone.company" #phoneCompany="ngModel">
+    //                 <option *ngFor="let comp of companies" [value]="comp">
+    //                     {{comp}}
+    //                 </option>
+    //             </select>
+    //         </div>
+    //         <div class="form-group">
+    //             <button class="btn btn-default" (click)="addPhone(phoneTitle, phonePrice, phoneCompany)">Добавить
+    //             </button>
+    //         </div>
+    //         <div><
+    //             <p>{{phoneTitle.name}} : {{phoneTitle.model}}</p>
+    //             <p>{{phonePrice.name}} : {{phonePrice.model}}</p>
+    //             <p>{{phoneCompany.name}} : {{phoneCompany.model}}</p>
+    //         </div>
+    //     </div>
+    // `
+
+
+    styles: [`
+        input.ng-touched.ng-invalid {
+            border: solid red 2px;
+        }
+
+        input.ng-touched.ng-valid {
+            border: solid green 2px;
+        }
+    `],
     template: `
-        <data-comp></data-comp>
-        <data-comp></data-comp>`
+        <div>
+            <div class="form-group">
+                <label>Имя</label>
+                <input class="form-control" name="name" [(ngModel)]="user.name" #name="ngModel" required/>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" type="email" name="email" [(ngModel)]="user.email" #email="ngModel"
+                       required email/>
+            </div>
+            <div class="form-group">
+                <label>Телефон</label>
+                <input class="form-control" name="phone" [(ngModel)]="user.phone" #phone="ngModel"
+                       required pattern="[0-9]{10}"/>
+            </div>
+            <div class="form-group">
+                <button [disabled]="name.invalid || email.invalid || phone.invalid"
+                        class="btn btn-default" (click)="addUser()">Добавить
+                </button>
+            </div>
+        </div>`
 })
 
 export class AppComponent {
+
+    user: User = new User();
+
+    addUser() {
+        console.log(this.user);
+    }
+
+    // phone: Phone = new Phone("", 0, "Samsung")
+    // companies: string[] = ["Apple", "Samsung"];
+    //
+    // addPhone(title: NgModel, price: NgModel, company: NgModel) {
+    //     console.log(title);
+    //     console.log(price);
+    //     console.log(company);
+    // }
+    //
+    // onTitleChange() {
+    //
+    //     if (this.phone.title == "нет")
+    //         this.phone.title = "не известно";
+    // }
 
     // items: Phone[] = [];
     //

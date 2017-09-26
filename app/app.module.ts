@@ -11,7 +11,7 @@ import {LogService} from "./log.service";
     imports: [BrowserModule, FormsModule],
     declarations: [AppComponent, WhileDirective, DataComponent],
     bootstrap: [AppComponent],
-    providers: [DataService, LogService]
+    // providers: [DataService, LogService]
 })
 export class AppModule {
 }
