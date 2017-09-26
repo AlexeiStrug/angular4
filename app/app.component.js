@@ -18,14 +18,7 @@ var AppComponent = (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.httpService.getData().subscribe(function (resp) {
-            var userList = resp.json().data;
-            for (var index in userList) {
-                console.log(userList[index]);
-                var user = userList[index];
-                _this.users.push({ name: user.userName, age: user.userAge });
-            }
-        });
+        this.httpService.getUsers().subscribe(function (data) { return _this.users = data; }, function (error) { _this.error = error; console.log(error); });
     };
     return AppComponent;
 }());

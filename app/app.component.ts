@@ -222,18 +222,25 @@ export class AppComponent implements OnInit {
 
     //other json with dop field
     users: User[] = [];
+    error: any;
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService) {
+    }
+
+    // ngOnInit() {
+    //     this.httpService.getData().subscribe((resp: Response) => {
+    //         let userList = resp.json().data;
+    //         for (let index in userList) {
+    //             console.log(userList[index];
+    //             let user = userList[index];
+    //             this.users.push({name: user.userName, age: user.userAge});
+    //         }
+    //     })
 
     ngOnInit() {
-        this.httpService.getData().subscribe((resp: Response) => {
-            let userList = resp.json().data;
-            for (let index in userList) {
-                console.log(userList[index];
-                let user = userList[index];
-                this.users.push({name: user.userName, age: user.userAge});
-            }
-        })
+        this.httpService.getUsers().subscribe(data => this.users = data,
+            error => {this.error = error; console.log(error)}
+            );
     }
 
     //Http many user
