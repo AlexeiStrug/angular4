@@ -140,15 +140,15 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
     // `
 
 
-    styles: [`
-        input.ng-touched.ng-invalid {
-            border: solid red 2px;
-        }
-
-        input.ng-touched.ng-valid {
-            border: solid green 2px;
-        }
-    `],
+    // styles: [`
+    //     input.ng-touched.ng-invalid {
+    //         border: solid red 2px;
+    //     }
+    //
+    //     input.ng-touched.ng-valid {
+    //         border: solid green 2px;
+    //     }
+    // `],
 
     //ngForm
     // template: `
@@ -217,13 +217,34 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
     //     </ul>`,
     // providers: [HttpService]
 
-    template: `<div>
-        <h1>Route in Angular</h1>
-        <router-outlet></router-outlet>
-    </div>`
+    //Routing links
+    styles: [`
+        .nav {
+            clear: both;
+        }
+
+        a {
+            float: left;
+        }
+
+        .active a {
+            color: red;
+        }`],
+    template: `
+        <div>
+            <ul class="nav">
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                    <a routerLink="">Главная</a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="/about">О сайте</a>
+                </li>
+            </ul>
+            <router-outlet></router-outlet>
+        </div>`
 })
 
-export class AppComponent{
+export class AppComponent {
 
     //other json with dop field
     // users: User[] = [];
