@@ -3,8 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {LogService} from "./log.service";
 import {NgForm, NgModel} from "@angular/forms";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {HttpService} from "./http.service";
-import {User} from "./user";
+// import {HttpService} from "./http.service";
+// import {User} from "./user";
 //
 // export class Item {
 //     purchase: string;
@@ -208,24 +208,29 @@ import {User} from "./user";
     // providers: [HttpService]
 
     //HTTPS get request many users
-    template: `
-        <ul>
-            <li *ngFor="let user of users">
-                <p>Name user: {{user?.name}}</p>
-                <p>Age user: {{user?.age}}</p>
-            </li>
-        </ul>`,
-    providers: [HttpService]
+    // template: `
+    //     <ul>
+    //         <li *ngFor="let user of users">
+    //             <p>Name user: {{user?.name}}</p>
+    //             <p>Age user: {{user?.age}}</p>
+    //         </li>
+    //     </ul>`,
+    // providers: [HttpService]
+
+    template: `<div>
+        <h1>Route in Angular</h1>
+        <router-outlet></router-outlet>
+    </div>`
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent{
 
     //other json with dop field
-    users: User[] = [];
-    error: any;
-
-    constructor(private httpService: HttpService) {
-    }
+    // users: User[] = [];
+    // error: any;
+    //
+    // constructor(private httpService: HttpService) {
+    // }
 
     // ngOnInit() {
     //     this.httpService.getData().subscribe((resp: Response) => {
@@ -237,11 +242,11 @@ export class AppComponent implements OnInit {
     //         }
     //     })
 
-    ngOnInit() {
-        this.httpService.getUsers().subscribe(data => this.users = data,
-            error => {this.error = error; console.log(error)}
-            );
-    }
+    // ngOnInit() {
+    //     this.httpService.getUsers().subscribe(data => this.users = data,
+    //         error => {this.error = error; console.log(error)}
+    //         );
+    // }
 
     //Http many user
     // users: User[]=[];

@@ -7,11 +7,22 @@ import {AppComponent} from './app.component';
 // import {DataService} from "./data.service";
 import {LogService} from "./log.service";
 import {HttpModule} from "@angular/http";
+import {AboutComponent} from "./about.component";
+import {NotFoundComponent} from "./not-found.component";
+import {HomeComponent} from "./home.component";
+import {Routes, RouterModule} from "@angular/router";
+
+const appRoutes: Routes = [
+    {path: '', component: HomeComponent},
+    {path: 'about', component: AboutComponent},
+    {path: 'contact', redirectTo: '/about', pathMatch: 'full'},
+    {path: '**', redirectTo: '/'}
+];
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
-    declarations: [AppComponent],
-    bootstrap: [AppComponent],
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(appRoutes)],
+    declarations: [AppComponent, HomeComponent, AboutComponent, NotFoundComponent],
+    bootstrap: [AppComponent]
     // providers: [DataService, LogService]
 })
 export class AppModule {
