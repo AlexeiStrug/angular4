@@ -1,0 +1,187 @@
+Index: app/app.component.css
+===================================================================
+--- app/app.component.css	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
++++ app/app.component.css	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
+@@ -1,16 +0,0 @@
+-h1, h2, th {
+-    color: red;
+-}
+-
+-td {
+-    color: pink;
+-}
+-
+-p {
+-    font-size: 13px;
+-}
+-
+-:host {
+-    font-family: Verdana;
+-    color: #555;
+-}
+\ No newline at end of file
+Index: package.json
+===================================================================
+--- package.json	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
++++ package.json	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
+@@ -1,32 +0,0 @@
+-{
+-  "name": "helloapp",
+-  "version": "1.0.0",
+-  "scripts": {
+-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
+-    "lite": "lite-server",
+-    "tsc": "tsc",
+-    "tsc:w": "tsc -w"
+-  },
+-  "dependencies": {
+-    "@angular/common": "~4.3.4",
+-    "@angular/compiler": "~4.3.4",
+-    "@angular/core": "~4.3.4",
+-    "@angular/forms": "~4.3.4",
+-    "@angular/http": "~4.3.4",
+-    "@angular/platform-browser": "~4.3.4",
+-    "@angular/platform-browser-dynamic": "~4.3.4",
+-    "@angular/router": "~4.3.4",
+-    "angular-in-memory-web-api": "~0.3.0",
+-    "systemjs": "0.19.40",
+-    "core-js": "^2.4.1",
+-    "rxjs": "5.0.1",
+-    "zone.js": "^0.8.4"
+-  },
+-  "devDependencies": {
+-    "@types/node": "^6.0.46",
+-    "concurrently": "^3.2.0",
+-    "gulp": "^3.9.1",
+-    "lite-server": "^2.2.2",
+-    "typescript": "~2.3.4"
+-  }
+-}
+Index: index.html
+===================================================================
+--- index.html	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
++++ index.html	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
+@@ -1,20 +0,0 @@
+-<html>
+-<head>
+-    <title>Hello Angular 2</title>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1">
+-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+-    <script src="node_modules/core-js/client/shim.min.js"></script>
+-    <script src="node_modules/zone.js/dist/zone.js"></script>
+-    <script src="node_modules/systemjs/dist/system.src.js"></script>
+-    <script src="systemjs.config.js"></script>
+-    <script>
+-        System.import('app').catch(function (err) {
+-            console.error(err);
+-        });
+-    </script>
+-</head>
+-<body>
+-<my-app>Загрузка...</my-app>
+-</body>
+-</html>
+\ No newline at end of file
+Index: systemjs-angular-loader.js
+===================================================================
+--- systemjs-angular-loader.js	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
++++ systemjs-angular-loader.js	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
+@@ -1,49 +0,0 @@
+-var templateUrlRegex = /templateUrl\s*:(\s*['"`](.*?)['"`]\s*)/gm;
+-var stylesRegex = /styleUrls *:(\s*\[[^\]]*?\])/g;
+-var stringRegex = /(['`"])((?:[^\\]\\\1|.)*?)\1/g;
+-
+-module.exports.translate = function (load) {
+-    if (load.source.indexOf('moduleId') != -1) return load;
+-
+-    var url = document.createElement('a');
+-    url.href = load.address;
+-
+-    var basePathParts = url.pathname.split('/');
+-
+-    basePathParts.pop();
+-    var basePath = basePathParts.join('/');
+-
+-    var baseHref = document.createElement('a');
+-    baseHref.href = this.baseURL;
+-    baseHref = baseHref.pathname;
+-
+-    if (!baseHref.startsWith('/base/')) { // it is not karma
+-        basePath = basePath.replace(baseHref, '');
+-    }
+-
+-    load.source = load.source
+-        .replace(templateUrlRegex, function (match, quote, url) {
+-            var resolvedUrl = url;
+-
+-            if (url.startsWith('.')) {
+-                resolvedUrl = basePath + url.substr(1);
+-            }
+-
+-            return 'templateUrl: "' + resolvedUrl + '"';
+-        })
+-        .replace(stylesRegex, function (match, relativeUrls) {
+-            var urls = [];
+-
+-            while ((match = stringRegex.exec(relativeUrls)) !== null) {
+-                if (match[2].startsWith('.')) {
+-                    urls.push('"' + basePath + match[2].substr(1) + '"');
+-                } else {
+-                    urls.push('"' + match[2] + '"');
+-                }
+-            }
+-
+-            return "styleUrls: [" + urls.join(', ') + "]";
+-        });
+-
+-    return load;
+-};
+\ No newline at end of file
+Index: tsconfig.json
+===================================================================
+--- tsconfig.json	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
++++ tsconfig.json	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
+@@ -1,17 +0,0 @@
+-{
+-  "compilerOptions": {
+-    "target": "es5",
+-    "module": "commonjs",
+-    "removeComments": true,
+-    "moduleResolution": "node",
+-    "sourceMap": true,
+-    "emitDecoratorMetadata": true,
+-    "experimentalDecorators": true,
+-    "lib": [
+-      "es2015",
+-      "dom"
+-    ],
+-    "noImplicitAny": true,
+-    "suppressImplicitAnyIndexErrors": true
+-  }
+-}
+\ No newline at end of file
+Index: app/main.ts
+===================================================================
+--- app/main.ts	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
++++ app/main.ts	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
+@@ -1,5 +0,0 @@
+-import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
+-import {AppModule} from "./app.module";
+-
+-const platform = platformBrowserDynamic();
+-platform.bootstrapModule(AppModule);
+\ No newline at end of file
+Index: app/main.js
+===================================================================
+--- app/main.js	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
++++ app/main.js	(revision 0abf133fc101f9a8e946a3d95da1bf4d428bc302)
+@@ -1,7 +0,0 @@
+-"use strict";
+-Object.defineProperty(exports, "__esModule", { value: true });
+-var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
+-var app_module_1 = require("./app.module");
+-var platform = platform_browser_dynamic_1.platformBrowserDynamic();
+-platform.bootstrapModule(app_module_1.AppModule);
+-//# sourceMappingURL=main.js.map
+\ No newline at end of file
