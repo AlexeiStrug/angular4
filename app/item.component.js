@@ -16,16 +16,21 @@ var ItemComponent = (function () {
         var _this = this;
         this.activeteRoute = activeteRoute;
         this.subscription = activeteRoute.params.subscribe(function (params) { return _this.id = params['id']; });
+        this.querySubscription = activeteRoute.queryParams.subscribe(function (queryParam) {
+            _this.product = queryParam['product'];
+            _this.price = queryParam['price'];
+        });
     }
     ItemComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
+        this.querySubscription.unsubscribe();
     };
     return ItemComponent;
 }());
 ItemComponent = __decorate([
     core_1.Component({
         selector: 'item-info',
-        template: "<h3>Model {{id}}</h3>"
+        template: "<h3>Model {{id}}</h3>\n    <div>Product: {{product}}</div>\n    <div>Price: {{price}}</div>"
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute])
 ], ItemComponent);

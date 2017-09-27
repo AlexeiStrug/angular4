@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {LogService} from "./log.service";
 import {NgForm, NgModel} from "@angular/forms";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 // import {HttpService} from "./http.service";
 // import {User} from "./user";
 //
@@ -30,6 +31,11 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
 //     phone: string;
 // }
 
+export class Item {
+    id:number;
+    product:string;
+    price:number;
+}
 @Component({
     selector: 'my-app',
     // templateUrl: './app.component.html',
@@ -240,17 +246,45 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
                     <a routerLink="/about">О сайте</a>
                 </li>
                 <li routerLinkActive="active">
-                    <a [routerLink]="['item', '5']">item 5</a>
+                    <a [routerLink]="['item', '5']" [queryParams]=
+                            "{'product':'phone', 'price':200}">item 5</a>
                 </li>
                 <li routerLinkActive="active">
                     <a [routerLink]="['item', '8']">item 8</a>
                 </li>
             </ul>
+            <div class="form-group">
+                <h3>Parameters:</h3>
+                <input type="number" [(ngModel)]="item.id" class="form-control"/><br />
+                <input type="number" {(ngModel)]="item.price" class="form-control"/><br />
+                <input [(ngModel)]="item.product" class="form-control" /><br />
+                <button (click) = "goToItem(item)" class="btn">Go to</button>
+            </div>
             <router-outlet></router-outlet>
+            <button (click)="goHome()">Go Home</button>
         </div>`
 })
 
 export class AppComponent {
+    item: Item  = new Item();
+    constructor(private router: Router) {
+
+    }
+
+    goToItem(myItem: Item) {
+        this.router.navigate(
+            ['/item', myItem.id],
+            {
+                queryParams:{
+                    'product':myItem.product,
+                    'price':myItem.price
+                }
+            }
+        );
+    }
+    goHome() {
+        this.router.navigate(['']);
+    }
 
     //other json with dop field
     // users: User[] = [];
