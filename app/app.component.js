@@ -5,31 +5,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var http_service_1 = require("./http.service");
-var AppComponent = (function () {
-    function AppComponent(httpService) {
-        this.httpService = httpService;
-        this.users = [];
+var Item = (function () {
+    function Item() {
     }
-    AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.httpService.getUsers().subscribe(function (data) { return _this.users = data; }, function (error) { _this.error = error; console.log(error); });
-    };
+    return Item;
+}());
+exports.Item = Item;
+var AppComponent = (function () {
+    function AppComponent() {
+        this.phones = ["iPhone 7", "LG G 5", "Honor 9", "Idol S4", "Nexus 6P"];
+        this.x = 5;
+        this.myDate = new Date(1913, 3, 12);
+        this.welcome = "Hello World!";
+        this.persentage = 0.14;
+        this.pi = 3.1415;
+        this.money = 23.45;
+    }
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        styles: ["\n        input.ng-touched.ng-invalid {\n            border: solid red 2px;\n        }\n\n        input.ng-touched.ng-valid {\n            border: solid green 2px;\n        }\n    "],
-        template: "\n        <ul>\n            <li *ngFor=\"let user of users\">\n                <p>Name user: {{user?.name}}</p>\n                <p>Age user: {{user?.age}}</p>\n            </li>\n        </ul>",
-        providers: [http_service_1.HttpService]
-    }),
-    __metadata("design:paramtypes", [http_service_1.HttpService])
+        template: "\n        <input [(ngModel)]=\"fact\" name=\"fact\"/>\n        <div>Factorial number {{fact}} = {{fact | factorial}}</div>\n        <input #phone name=\"phone\" class=\"form-control\">\n        <button class=\"btn\" (click)=\"phones.push(phone.value)\">Add</button>\n        <p>{{phones | join}}</p>\n    "
+    })
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

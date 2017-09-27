@@ -7,28 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var AboutComponent = (function () {
-    function AboutComponent() {
-        this.saved = false;
+var ItemStatComponent = (function () {
+    function ItemStatComponent() {
     }
-    AboutComponent.prototype.save = function () {
-        this.saved = true;
-    };
-    AboutComponent.prototype.cadDeactivate = function () {
-        if (!this.saved) {
-            return confirm("You shure what left page?");
-        }
-        else {
-            return true;
-        }
-    };
-    return AboutComponent;
+    return ItemStatComponent;
 }());
-AboutComponent = __decorate([
+ItemStatComponent = __decorate([
     core_1.Component({
-        selector: 'about-app',
-        template: "<h3>About site</h3>\n    <button class=\"btn btn-default\" (click)=\"save()\">Save</button>\n    <a routerLink=\"\">Home</a> "
+        selector: 'item-stat',
+        template: "<h3>Statistic item</h3>"
     })
-], AboutComponent);
-exports.AboutComponent = AboutComponent;
-//# sourceMappingURL=about.component.js.map
+], ItemStatComponent);
+exports.ItemStatComponent = ItemStatComponent;
+//# sourceMappingURL=item.stat.component.js.map

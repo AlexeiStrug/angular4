@@ -32,10 +32,11 @@ import {Router} from "@angular/router";
 // }
 
 export class Item {
-    id:number;
-    product:string;
-    price:number;
+    id: number;
+    product: string;
+    price: number;
 }
+
 @Component({
     selector: 'my-app',
     // templateUrl: './app.component.html',
@@ -223,68 +224,121 @@ export class Item {
     //     </ul>`,
     // providers: [HttpService]
 
-    //Routing links
-    styles: [`
-        .nav {
-            clear: both;
-        }
+    // Routing links
+    // styles: [`
+    //     .nav {
+    //         clear: both;
+    //     }
+    //
+    //     a {
+    //         float: left;
+    //     }
+    //
+    //     .active a {
+    //         color: red;
+    //     }`],
+    // template: `
+    //     <div>
+    //         <ul class="nav">
+    //             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+    //                 <a routerLink="">Главная</a>
+    //             </li>
+    //             <li routerLinkActive="active">
+    //                 <a routerLink="/about">О сайте</a>
+    //             </li>
+    //             <li routerLinkActive="active">
+    //                 <a [routerLink]="['item', '5']" [queryParams]=
+    //                         "{'product':'phone', 'price':200}">item 5</a>
+    //             </li>
+    //             <li routerLinkActive="active">
+    //                 <a [routerLink]="['item', '8']">item 8</a>
+    //             </li>
+    //         </ul>
+    //         <div class="form-group">
+    //             <h3>Parameters:</h3>
+    //             <input type="number" [(ngModel)]="item.id" class="form-control"/><br />
+    //             <input type="number" {(ngModel)]="item.price" class="form-control"/><br />
+    //             <input [(ngModel)]="item.product" class="form-control" /><br />
+    //             <button (click) = "goToItem(item)" class="btn">Go to</button>
+    //         </div>
+    //         <router-outlet></router-outlet>
+    //         <button (click)="goHome()">Go Home</button>
+    //     </div>`
 
-        a {
-            float: left;
-        }
+    // template: `
+    //     <div>
+    //         <nav>
+    //             <a routerLink="">Main</a> |
+    //             <a routerLink="/item/5/details">Info about item</a> |
+    //             <a routerLink="/item/5/stat">Statistic item</a>
+    //         </nav>
+    //         <router-outlet></router-outlet>
+    //     </div>`
 
-        .active a {
-            color: red;
-        }`],
+    //Route
+    // template: `<div>
+    //                 <h1>Маршрутизация в Angular 2</h1>
+    //                 <nav>
+    //                     <a routerLink="">Главная</a>
+    //                     <a routerLink="/about">О сайте</a>
+    //                 </nav>
+    //                 <router-outlet></router-outlet>
+    //            </div>`
+
+    //Pipes
+    // template: `
+    //     <div>No formated: {{myDate}}</div>
+    //     <div>With formate: {{myDate | date:"dd/MM/yyyy"}}</div>
+    //     <div>{{welcome | uppercase}}</div>
+    //     <div>{{welcome | lowercase}}</div>
+    //     <div>{{persentage | percent}}</div>
+    //     <div>{{persentage | currency}}</div>
+    //     <div>{{pi | number:'3.5-5'}}</div>
+    //     <div>{{money | currency:'RUB':true}}</div>
+    //     <div>{{money | currency:'RUB':false:'1.1-1'}}</div>
+    //     <div>{{message | slice:6:11 | uppercase}}</div>`
+
+    // Custom Pipe
     template: `
-        <div>
-            <ul class="nav">
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-                    <a routerLink="">Главная</a>
-                </li>
-                <li routerLinkActive="active">
-                    <a routerLink="/about">О сайте</a>
-                </li>
-                <li routerLinkActive="active">
-                    <a [routerLink]="['item', '5']" [queryParams]=
-                            "{'product':'phone', 'price':200}">item 5</a>
-                </li>
-                <li routerLinkActive="active">
-                    <a [routerLink]="['item', '8']">item 8</a>
-                </li>
-            </ul>
-            <div class="form-group">
-                <h3>Parameters:</h3>
-                <input type="number" [(ngModel)]="item.id" class="form-control"/><br />
-                <input type="number" {(ngModel)]="item.price" class="form-control"/><br />
-                <input [(ngModel)]="item.product" class="form-control" /><br />
-                <button (click) = "goToItem(item)" class="btn">Go to</button>
-            </div>
-            <router-outlet></router-outlet>
-            <button (click)="goHome()">Go Home</button>
-        </div>`
+        <input [(ngModel)]="fact" name="fact"/>
+        <div>Factorial number {{fact}} = {{fact | factorial}}</div>
+        <input #phone name="phone" class="form-control">
+        <button class="btn" (click)="phones.push(phone.value)">Add</button>
+        <p>{{phones | join}}</p>
+    `
 })
 
 export class AppComponent {
-    item: Item  = new Item();
-    constructor(private router: Router) {
 
-    }
+    phones = ["iPhone 7", "LG G 5", "Honor 9", "Idol S4", "Nexus 6P"];
 
-    goToItem(myItem: Item) {
-        this.router.navigate(
-            ['/item', myItem.id],
-            {
-                queryParams:{
-                    'product':myItem.product,
-                    'price':myItem.price
-                }
-            }
-        );
-    }
-    goHome() {
-        this.router.navigate(['']);
-    }
+    x: number = 5;
+    myDate = new Date(1913, 3, 12);
+    welcome: string = "Hello World!";
+    persentage: number = 0.14;
+    pi: number = 3.1415;
+    money: number = 23.45;
+    // item: Item = new Item();
+    //
+    // constructor(private router: Router) {
+    //
+    // }
+    //
+    // goToItem(myItem: Item) {
+    //     this.router.navigate(
+    //         ['/item', myItem.id],
+    //         {
+    //             queryParams: {
+    //                 'product': myItem.product,
+    //                 'price': myItem.price
+    //             }
+    //         }
+    //     );
+    // }
+    //
+    // goHome() {
+    //     this.router.navigate(['']);
+    // }
 
     //other json with dop field
     // users: User[] = [];
