@@ -15,9 +15,11 @@ var about_component_1 = require("./about.component");
 var not_found_component_1 = require("./not-found.component");
 var home_component_1 = require("./home.component");
 var router_1 = require("@angular/router");
+var item_component_1 = require("./item.component");
 var appRoutes = [
     { path: '', component: home_component_1.HomeComponent },
     { path: 'about', component: about_component_1.AboutComponent },
+    { path: 'item/:id', component: item_component_1.ItemComponent },
     { path: 'contact', redirectTo: '/about', pathMatch: 'full' },
     { path: '**', redirectTo: '/' }
 ];
@@ -29,7 +31,7 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule, router_1.RouterModule.forRoot(appRoutes)],
-        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, about_component_1.AboutComponent, not_found_component_1.NotFoundComponent],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, about_component_1.AboutComponent, not_found_component_1.NotFoundComponent, item_component_1.ItemComponent],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

@@ -239,6 +239,12 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
                 <li routerLinkActive="active">
                     <a routerLink="/about">О сайте</a>
                 </li>
+                <li routerLinkActive="active">
+                    <a [routerLink]="['item', '5']">item 5</a>
+                </li>
+                <li routerLinkActive="active">
+                    <a [routerLink]="['item', '8']">item 8</a>
+                </li>
             </ul>
             <router-outlet></router-outlet>
         </div>`

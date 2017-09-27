@@ -12,16 +12,19 @@ import {NotFoundComponent} from "./not-found.component";
 import {HomeComponent} from "./home.component";
 import {Routes, RouterModule} from "@angular/router";
 
+import {ItemComponent} from "./item.component";
+
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'about', component: AboutComponent},
+    {path: 'item/:id', component: ItemComponent},
     {path: 'contact', redirectTo: '/about', pathMatch: 'full'},
     {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(appRoutes)],
-    declarations: [AppComponent, HomeComponent, AboutComponent, NotFoundComponent],
+    declarations: [AppComponent, HomeComponent, AboutComponent, NotFoundComponent, ItemComponent],
     bootstrap: [AppComponent]
     // providers: [DataService, LogService]
 })
